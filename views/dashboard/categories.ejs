@@ -1,0 +1,46 @@
+<% extend('../layouts/dashboard-layout') %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>排序</th>
+          <th>名稱</th>
+          <th>路徑</th>
+          <th width="30"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button type="button" class="btn btn-outline-secondary btn-sm"><span class="fa fa-bars">  </span></button></td>
+          <td class="align-middle">網誌文章</td>
+          <td><input type="text" class="form-control form-control-sm"></td>
+          <td class="align-middle">
+            <a href="#" class="btn btn-outline-danger btn-sm">刪除</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="align-middle">新增</td>
+          <td>
+            <label for="name">分類名稱</label>
+            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="請輸入分類名稱">
+          </td>
+          <td colspan="2">
+            <label for="path">路徑</label>
+            <input type="text" class="form-control" id="path" placeholder="請輸入分類路徑">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form action="/dashboard/categories" method="POST">
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary">更新資訊</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
