@@ -5,8 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var firebase = require('firebase');
+var flash = require('connect-flash');
+var session = require('express-session');
 var index = require('./routes/index');
 var dashboard = require('./routes/dashboard');
+
 
 var app = express();
 
@@ -22,6 +25,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'mysupersecret', resave: false, saveUninitialized: false }));
+app.use(flash());
 
 app.use('/', index);
 app.use('/dashboard', dashboard);
