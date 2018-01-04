@@ -1,11 +1,37 @@
 <% extend('../layouts/dashboard-layout') %>
 
-<div class="row justify-content-center">
+<% 
+  if (article === undefined) {
+    var article = {};
+  }
+%>
+
+<form 
+  <% if (!article.id) {%>
+  action="/dashboard/article/create/" 
+  <% } else { %>
+  action="/dashboard/article/update/<%= article.id %>"
+  <% } %>
+  method="POST" 
+  class="row justify-content-center">
   <div class="col-md-6">
-    <label for="">請輸入標題</label>
-    <input type="text" class="form-control" placeholder="標題">
+    <% if (hasErrors) { %>
+      <% for (var prop in messages) { %>
+        <div class="alert alert-warning">
+          <%- messages[prop] %>
+        </div>
+      <% } %>
+    <% } %>
+
+    <% if (article.id) {%>
+      <input type="hidden" name="id" value="<%= article.id %>">
+    <% } %>
+    <label for="title">請輸入標題</label>
+    <input type="text" id="title" class="form-control" name="title" placeholder="標題" value="<%= article.title || '' %>">
     <hr>
-    <textarea name="content" id="editor" class="form-control" rows="30"></textarea>
+    <textarea name="content" id="editor" class="form-control">
+      <%= article.content || '' %>
+    </textarea>
     <script>
 			CKEDITOR.replace( 'content' );
 		</script>
@@ -15,39 +41,35 @@
     <div class="card mb-3">
       <h6 class="card-header">分類</h6>
       <div class="card-body">
-        <div class="form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-            Option one is this and that&mdash;be sure to include why it's great
-          </label>
-        </div>
+        <% for (var prop in categories) { %>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="category" required value="<%- prop %>" 
+                <% if(prop === article.category) { %><%= 'checked' %><% } %>
+                >
+              <%- categories[prop].name %>
+            </label>
+          </div>
+        <% } %>
       </div>
     </div>
 
     <div class="card mb-3">
-      <h6 class="card-header">標籤</h6>
+      <h6 class="card-header">是否公開</h6>
       <div class="card-body">
-        <div class="form-check form-check-inline">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> 標籤
+        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+          <label class="btn btn-outline-primary w-100 <% if(article.status === 'draft') { %><%= 'active' %><% } %>">
+            <input type="radio" name="status" autocomplete="off" value="draft" <% if(article.status === 'draft') { %><%= 'checked' %><% } %> > 草稿
           </label>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="輸入標籤名稱" aria-label="輸入標籤名稱">
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button">新增標籤</button>
-          </span>
+          <label class="btn btn-outline-primary w-100 <% if(article.status === 'public') { %><%= 'active' %><% } %>">
+            <input type="radio" name="status" autocomplete="off" value="public" <% if(article.status === 'public') { %><%= 'checked' %><% } %> > 公開
+          </label>
         </div>
       </div>
     </div>
 
     <div class="btn-group w-100">
-      <a href="#" class="btn btn-outline-secondary w-100">預覽</a>
-      <a href="#" class="btn btn-outline-secondary w-100">儲存草稿</a>
-      <a href="#" class="btn btn-outline-primary w-100">發佈</a>
+      <button type="submit" class="btn btn-outline-primary w-100">儲存</button>
     </div>
   </div>
-</div>
-
+</form>

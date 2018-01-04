@@ -2,44 +2,44 @@
 
 <div class="row justify-content-center">
   <div class="col-md-6">
+    <% if (hasErrors) { %>
+      <% for (var prop in messages) { %>
+        <div class="alert alert-warning">
+          <%- messages[prop] %>
+        </div>
+      <% } %>
+    <% } %>
+
+    <% if (articles === null) { %>
+      <div class="alert alert-warning">
+        目前沒有文章喔
+      </div>
+    <% } %>
+
     <div class="btn-group w-100">
-      <a href="#" class="btn btn-outline-secondary w-100 rounded-0 active">已發佈</a>
-      <a href="#" class="btn btn-outline-secondary w-100 rounded-0">草稿</a>
-      <a href="/dashboard/post/create" class="btn btn-primary">新增文章</a>
-    </div>
-    <div class="card my-3">
-      <h4 class="card-header">Windows 安裝 Node.js 與 Git 環境</h4>
-      <div class="card-body">
-        <p>前幾週有介紹到如何在 Windows 安裝 Node.js 與 Git 環境，很多剛入門的同學都會有這樣的問題："不知如何開始" ，這邊提供錄影檔讓大家可以一步一步開始</p>
-        
-        <div>
-          <span class="fa fa-clock-o"></span> 半年前
-        </div>
-      </div>
-      <div class="card-footer p-0 btn-group">
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">編輯</a>
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">發表</a>
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">刪除</a>
-      </div>
-    </div>
-    <div class="card my-3">
-      <h4 class="card-header">Windows 安裝 Node.js 與 Git 環境</h4>
-      <div class="card-body">
-        <p>前幾週有介紹到如何在 Windows 安裝 Node.js 與 Git 環境，很多剛入門的同學都會有這樣的問題："不知如何開始" ，這邊提供錄影檔讓大家可以一步一步開始</p>
-        
-        <div>
-          <span class="fa fa-clock-o"></span> 半年前
-        </div>
-      </div>
-      <div class="card-footer p-0 btn-group">
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">編輯</a>
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">發表</a>
-        <a href="#" class="btn btn-outline-secondary w-100 rounded-0">刪除</a>
-      </div>
+      <a href="/dashboard/public" class="btn btn-outline-secondary w-100 rounded-0 <% if(state === 'public') { %><%= 'active' %><% } %>">已發佈</a>
+      <a href="/dashboard/draft" class="btn btn-outline-secondary w-100 rounded-0 <% if(state === 'draft') { %><%= 'active' %><% } %>">草稿</a>
+      <a href="/dashboard/article/create" class="btn btn-primary">新增文章</a>
     </div>
 
+    <% for (var prop in articles) { %>
+      <div class="card my-3">
+        <h4 class="card-header"><%= articles[prop].title %></h4>
+        <div class="card-body">
+          <%- articles[prop].content %>
+          <div>
+            <span class="fa fa-clock-o"></span> 
+            <%= moment(articles[prop].update_time*1000).format('YYYY/MM/DD'); %>
+          </div>
+        </div>
+        <div class="card-footer p-0 btn-group">
+          <a href="/dashboard/article/<%= articles[prop].id %>" class="btn btn-outline-secondary w-100 rounded-0">編輯</a>
+          <a href="#" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
+          <a href="#" class="btn btn-outline-secondary w-100 rounded-0">發表</a>
+          <a href="#" class="btn btn-outline-secondary w-100 rounded-0">刪除</a>
+        </div>
+      </div>
+    <% } %>
   </div>
 </div>
 
