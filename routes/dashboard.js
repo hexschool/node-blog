@@ -47,7 +47,7 @@ router.get('/article/create', (req, res) => {
 router.get('/article/:id', (req, res) => {
   const messages = req.flash('error');
   const id = req.param('id');
-  let categories = {}
+  let categories = {};
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
     return articlesRef.child(id).once('value');

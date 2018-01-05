@@ -34,7 +34,9 @@
         </div>
         <div class="card-footer p-0 btn-group">
           <a href="/dashboard/article/<%= articles[prop].id %>" class="btn btn-outline-secondary w-100 rounded-0">編輯</a>
-          <a href="#" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
+          <% if (state == 'public') { %>
+          <a href="/post/<%- articles[prop].id %>" target="_blank" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
+          <% } %>
           <a href="#" class="btn btn-outline-secondary w-100 rounded-0">發表</a>
           <a href="#" class="btn btn-outline-secondary w-100 rounded-0">刪除</a>
         </div>

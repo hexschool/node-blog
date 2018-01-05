@@ -23,14 +23,19 @@
   </style>
 </head>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00cc99;">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <i class="fa fa-diamond" aria-hidden="true"></i>
       六角部落格
     </a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ml-auto">
-        <a class="nav-item nav-link" href="#">Home</a>
-        <a class="nav-item nav-link active" href="#">Blog <span class="sr-only">(current)</span></a>
+        <% for (var prop in categories) { %>
+          <a class="nav-item nav-link 
+          <% if (categories[prop].id === categoryId) { %>
+            <%- 'active' %>
+          <% } %>
+          " href="/archives/<%- categories[prop].id %>"><%- categories[prop].name %> <span class="sr-only">(current)</span></a>
+        <% } %>
       </div>
     </div>
   </nav>
