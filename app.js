@@ -9,7 +9,7 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var index = require('./routes/index');
 var dashboard = require('./routes/dashboard');
-
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -28,8 +28,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'mysupersecret', resave: false, saveUninitialized: false }));
 app.use(flash());
 
+const authChecker = (req, res, next) => {
+  console.log('middleware', req.session);
+  if (req.session.uid) {
+    return next();
+  }
+  return res.redirect('/auth/signin');
+}
+
+app.use('/auth', auth);
 app.use('/', index);
-app.use('/dashboard', dashboard);
+app.use('/dashboard', authChecker, dashboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

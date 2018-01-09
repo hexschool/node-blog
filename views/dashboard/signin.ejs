@@ -1,0 +1,28 @@
+<% extend('../layouts/dashboard-layout') %>
+
+<div class="row justify-content-center">
+  <div class="col-sm-6">
+    <% if (hasErrors) { %>
+      <% for (var prop in messages) { %>
+        <div class="alert alert-warning">
+          <%- messages[prop] %>
+        </div>
+      <% } %>
+    <% } %>
+    <form method="POST" action="/auth/signin">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="請輸入 email" required>
+        <small id="emailHelp" class="form-text text-muted">我們不會隨意散佈你的 Email</small>
+      </div>
+      <div class="form-group">
+        <label for="password">密碼</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" required>
+      </div>
+      <div class="text-right mt-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+

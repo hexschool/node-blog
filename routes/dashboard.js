@@ -1,6 +1,6 @@
 const express = require('express');
 const moment = require('moment');
-const firebaseDb = require('../models/firebase_connect');
+const firebaseDb = require('../models/firebase_admin_connect');
 
 const router = express.Router();
 const categoriesPath = '/categories/';
@@ -10,7 +10,15 @@ const articlesRef = firebaseDb.ref(articlesPath);
 const tagsPath = '/tags/';
 const tagsRef = firebaseDb.ref(tagsPath);
 
-router.get('/:state', (req, res) => {
+router.get('/', (req, res) => {
+  const messages = req.flash('error');
+  res.render('dashboard/index', {
+    title: 'Express',
+    hasErrors: messages.length > 0,
+  });
+});
+
+router.get('/archives/:state', (req, res) => {
   const messages = req.flash('error');
   const state = req.param('state') || 'public';
   let categories = {};

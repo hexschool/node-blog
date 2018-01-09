@@ -1,13 +1,13 @@
 const express = require('express');
 const moment = require('moment');
-const firebaseDb = require('../models/firebase_connect');
+const firebase = require('firebase');
+const firebaseDb = require('../models/firebase_admin_connect');
 
 const router = express.Router();
 const categoriesPath = '/categories/';
 const categoriesRef = firebaseDb.ref(categoriesPath);
 const articlesPath = '/articles/';
 const articlesRef = firebaseDb.ref(articlesPath);
-
 
 /* GET home page. */
 router.get('/', (req, res) => {
