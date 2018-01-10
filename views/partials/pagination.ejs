@@ -1,0 +1,17 @@
+<nav class="my-5" aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item <% if (!pagination.has_pre) { %>disabled<% } %>">
+      <a class="page-link" href="/<%- pagination.category %>?page=<%- pagination.current_page - 1 %>" tabindex="-1">Previous</a>
+    </li>
+    <% for (i = 1; i < pagination.total_pages + 1; i++) { %>
+      <li class="page-item <% if (pagination.current_page === i) { %>active<% } %>"> 
+        <a class="page-link" href="/<%- pagination.category %>?page=<%- i %>">
+          <%- i %>
+        </a>
+      </li>
+    <% } %>
+    <li class="page-item <% if (!pagination.has_next) { %>disabled<% } %>">
+      <a class="page-link" href="/<%- pagination.category %>?page=<%- pagination.current_page + 1 %>">Next</a>
+    </li>
+  </ul>
+</nav>

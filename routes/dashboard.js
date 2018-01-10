@@ -1,6 +1,7 @@
 const express = require('express');
 const moment = require('moment');
 const firebaseDb = require('../models/firebase_admin_connect');
+const convertPagination = require('../modules/pagination');
 
 const router = express.Router();
 const categoriesPath = '/categories/';
@@ -21,15 +22,18 @@ router.get('/', (req, res) => {
 router.get('/archives/:state', (req, res) => {
   const messages = req.flash('error');
   const state = req.param('state') || 'public';
+  const currentPage = Number.parseInt(req.query.page, 10) || 1;
   let categories = {};
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
     return articlesRef.orderByChild('status').equalTo(state).once('value');
   }).then((snapshot) => {
-    const articles = snapshot.val();
+    // const articles = snapshot.val();
+    const articles = convertPagination(snapshot, currentPage, `dashboard/archives/${state}`);
     res.render('dashboard/archives', {
       title: 'Express',
-      articles,
+      articles: articles.data,
+      pagination: articles.page,
       messages,
       categories,
       state,
