@@ -1,5 +1,6 @@
 const express = require('express');
 const moment = require('moment');
+const striptags = require('striptags');
 const firebaseDb = require('../models/firebase_admin_connect');
 const convertPagination = require('../modules/pagination');
 
@@ -38,6 +39,7 @@ router.get('/archives/:state', (req, res) => {
       categories,
       state,
       moment, // 時間套件
+      striptags,
       hasErrors: messages.length > 0,
     });
   });
@@ -108,8 +110,20 @@ router.post('/article/create', (req, res) => {
 
 router.post('/article/update/:id', (req, res) => {
   const data = req.body;
-  articlesRef.child(data.id).set(data).then(() => {
+  const id = req.param('id');
+  articlesRef.child(id).set(data).then(() => {
     res.redirect(`/dashboard/article/${data.id}`);
+  });
+});
+
+router.delete('/article/:id', (req, res) => {
+  const id = req.param('id');
+  articlesRef.child(id).remove().then(() => {
+    res.send({
+      success: true,
+      url: '/dashboard/archives/public',
+    });
+    res.end();
   });
 });
 

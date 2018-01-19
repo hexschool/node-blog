@@ -28,26 +28,50 @@
           <%= articles[prop].title %>
         </h4>
         <div class="card-body">
-          <%- articles[prop].content %>
+          <%- striptags(articles[prop].content).slice(0, 150) %>...
           <div>
             <span class="fa fa-clock-o"></span> 
             <%= moment(articles[prop].update_time*1000).format('YYYY/MM/DD'); %>
             ,
             <span class="fa fa-folder-open-o"></span>
-            <span><%= categories[articles[prop].category].name %></span>
+            <span>
+              <% if (categories.hasOwnProperty(articles[prop].category)) { %>
+                <%= categories[articles[prop].category].name %>
+              <% } else { %>
+                沒有分類
+              <% } %>
+            </span>
           </div>
         </div>
         <div class="card-footer p-0 btn-group">
+          <a href="#" class="btn btn-outline-danger rounded-0 deletePost" data-id="<%- articles[prop].id %>" data-title="<%- articles[prop].title %>">刪除</a>
           <a href="/dashboard/article/<%= articles[prop].id %>" class="btn btn-outline-secondary w-100 rounded-0">編輯</a>
           <% if (state == 'public') { %>
           <a href="/post/<%- articles[prop].id %>" target="_blank" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
           <% } %>
-          <a href="#" class="btn btn-outline-secondary w-100 rounded-0">發表</a>
-          <a href="#" class="btn btn-outline-secondary w-100 rounded-0">刪除</a>
         </div>
       </div>
     <% } %>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('.deletePost').on('click', function(e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var title = $(this).data('title');
+      if (confirm('確認是否刪除' + title)) {
+        $.ajax({
+          url: '/dashboard/article/' + id,
+          method: 'DELETE'
+        }).done(function(data) {
+          window.location = data.url;
+        });
+      }
+      
+    });
+  });
+</script>
 
 <%- include('../partials/pagination') %>

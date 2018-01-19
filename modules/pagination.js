@@ -1,5 +1,5 @@
 const pageConfig = {
-  perpage: 3,
+  perpage: 10,
 };
 
 const convertPagination = (snapshot, current, category = '') => {
