@@ -37,8 +37,10 @@
         </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
+        <% if (hasOwnProperty('currentPath')) { %>
         <a class="nav-item nav-link <% if (currentPath.match('/archives/')) { %>active<% } %>" href="/dashboard/archives/public">文章管理 </a>
         <a class="nav-item nav-link <% if (currentPath.match('/categories/')) { %>active<% } %>" href="/dashboard/categories">分類管理 </a>
+        <% } %>
       </div>
     </div>
     <a class="nav-link" href="/auth/signout">登出</a>
