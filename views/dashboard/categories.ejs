@@ -13,7 +13,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th>排序</th>
           <th>名稱</th>
           <th>路徑</th>
           <th width="30"></th>
@@ -22,7 +21,6 @@
       <tbody>
         <% for (var prop in categories) { %>
           <tr>
-            <td><button type="button" class="btn btn-outline-secondary btn-sm"><span class="fa fa-bars">  </span></button></td>
             <td class="align-middle"><%- categories[prop].name %></td>
             <td><input type="text" class="form-control form-control-sm" value="<%= categories[prop].path %>"></td>
             <td class="align-middle">
