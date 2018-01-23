@@ -1,5 +1,5 @@
 const express = require('express');
-const firebase = require('../models/firebase_connect');
+const firebase = require('../connections/firebase_connect');
 
 const router = express.Router();
 
