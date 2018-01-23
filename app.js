@@ -10,6 +10,7 @@ var session = require('express-session');
 var index = require('./routes/index');
 var dashboard = require('./routes/dashboard');
 var auth = require('./routes/auth');
+require('dotenv').config();
 
 var app = express();
 
@@ -30,7 +31,7 @@ app.use(flash());
 
 const authChecker = (req, res, next) => {
   console.log('middleware', req.session);
-  if (req.session.uid) {
+  if (req.session.uid === process.env.ADMIN_UID) {
     return next();
   }
   return res.redirect('/auth/signin');

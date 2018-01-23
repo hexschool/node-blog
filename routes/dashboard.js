@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
   const messages = req.flash('error');
   res.render('dashboard/index', {
     title: 'Express',
+    currentPath: '/',
     hasErrors: messages.length > 0,
   });
 });
@@ -35,6 +36,7 @@ router.get('/archives/:state', (req, res) => {
       title: 'Express',
       articles: articles.data,
       pagination: articles.page,
+      currentPath: '/archives/',
       messages,
       categories,
       state,
@@ -51,6 +53,7 @@ router.get('/article/create', (req, res) => {
     const categories = snapshot.val();
     res.render('dashboard/article', {
       title: 'Express',
+      currentPath: '/article/create',
       categories,
       messages,
       hasErrors: messages.length > 0,
@@ -69,6 +72,7 @@ router.get('/article/:id', (req, res) => {
     const article = snapshot.val();
     res.render('dashboard/article', {
       title: 'Express',
+      currentPath: '/article/',
       article,
       messages,
       categories,
@@ -83,6 +87,7 @@ router.get('/categories', (req, res) => {
     const categories = snapshot.val();
     res.render('dashboard/categories', {
       title: 'Express',
+      currentPath: '/categories/',
       categories,
       messages,
       hasErrors: messages.length > 0,

@@ -2,11 +2,13 @@ const express = require('express');
 const firebase = require('../models/firebase_connect');
 
 const router = express.Router();
+const currentPath = '/auth';
 
 router.get('/signup', (req, res) => {
   const messages = req.flash('error');
   res.render('dashboard/signup', {
     messages,
+    currentPath,
     hasErrors: messages.length > 0,
   });
 });
@@ -15,6 +17,7 @@ router.get('/signin', (req, res) => {
   const messages = req.flash('error');
   res.render('dashboard/signin', {
     messages,
+    currentPath,
     hasErrors: messages.length > 0,
   });
 });

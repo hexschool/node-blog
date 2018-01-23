@@ -1,11 +1,10 @@
 <% extend('./layouts/layout') %>
 
-<div class="row my-4">
+<div class="row my-4 justify-content-center">
   <div class="col-md-9">
     <% for (var prop in articles) { %>
       <div class="card mb-3">
         <div class="card-body">
-          <!-- <img class="img-fluid" src="https://firebasestorage.googleapis.com/v0/b/hexschool-api.appspot.com/o/blog%2F2017%2F08%2Fbootstrap4.png?alt=media&token=0b014ac6-b99b-46e7-8336-3fbfda1da3c2" alt="">-->
           <a href="/post/<%- articles[prop].id %>"> <h2 class="text-primary"><%= articles[prop].title %></h2></a>
           <div class="d-flex flex-row text-secondary small">
             <div class="p-2"><span class="fa fa-clock-o"></span> <%= moment(articles[prop].update_time*1000).format('YYYY/MM/DD'); %></div>
@@ -25,15 +24,6 @@
         </div>
       </div>
     <% } %>
-  </div>
-  <!-- headers -->
-  <div class="col-md-3">
-    <h2 class="text-secondary">Tags</h2>
-    <a href="#" class="badge badge-info"><i class="fa fa-tag" aria-hidden="true"></i> scss</a>
-    <a href="#" class="badge badge-info"><i class="fa fa-tag" aria-hidden="true"></i> css</a>
-    <a href="#" class="badge badge-info"><i class="fa fa-tag" aria-hidden="true"></i> html</a>
-    <a href="#" class="badge badge-info"><i class="fa fa-tag" aria-hidden="true"></i> bootstrap4</a>
-    <a href="#" class="badge badge-info"><i class="fa fa-tag" aria-hidden="true"></i> design</a>
   </div>
 </div>
 
