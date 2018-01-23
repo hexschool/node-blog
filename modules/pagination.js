@@ -4,7 +4,7 @@ const pageConfig = {
 
 const convertPagination = (snapshot, current, category = '') => {
   const data = [];
-  const totalResult = snapshot.numChildren(); // 總資料數
+  const totalResult = snapshot.length; // 總資料數
   const pageCount = Math.ceil(totalResult / pageConfig.perpage); // 總頁數
   let currentPage = current;
   let i = 0;
@@ -17,7 +17,7 @@ const convertPagination = (snapshot, current, category = '') => {
   snapshot.forEach((childSnapshot) => {
     i += 1;
     if (i > minItem && i <= maxItem) {
-      const item = childSnapshot.val();
+      const item = childSnapshot;
       item.num = i;
       data.push(item);
     }

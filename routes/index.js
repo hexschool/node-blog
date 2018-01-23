@@ -3,6 +3,7 @@ const moment = require('moment');
 const striptags = require('striptags');
 const firebaseDb = require('../connections/firebase_admin_connect');
 const convertPagination = require('../modules/pagination');
+const firebaseSort = require('../modules/firebaseSort');
 
 const router = express.Router();
 const categoriesPath = '/categories/';
@@ -17,9 +18,10 @@ router.get('/', (req, res) => {
 
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
-    return articlesRef.orderByChild('status').equalTo('public').once('value');
+    return articlesRef.orderByChild('update_time').once('value');
   }).then((snapshot) => {
-    const articles = convertPagination(snapshot, currentPage);
+    const sortData = firebaseSort.byDate(snapshot, 'status', 'public');
+    const articles = convertPagination(sortData, currentPage);
     res.render('archives', {
       title: 'Express',
       categoryId: null,
@@ -34,14 +36,14 @@ router.get('/', (req, res) => {
 
 router.get('/archives/:category', (req, res) => {
   const currentPage = Number.parseInt(req.query.page, 10) || 1;
-
   const categoryId = req.param('category');
   let categories = {};
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
-    return articlesRef.orderByChild('category').equalTo(categoryId).once('value');
+    return articlesRef.orderByChild('update_time').once('value');
   }).then((snapshot) => {
-    const articles = convertPagination(snapshot, currentPage, `archives/${categoryId}`);
+    const sortData = firebaseSort.byDate(snapshot, 'category', categoryId);
+    const articles = convertPagination(sortData, currentPage, `archives/${categoryId}`);
     res.render('archives', {
       title: 'Express',
       categories,

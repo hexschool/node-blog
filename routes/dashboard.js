@@ -3,6 +3,7 @@ const moment = require('moment');
 const striptags = require('striptags');
 const firebaseDb = require('../connections/firebase_admin_connect');
 const convertPagination = require('../modules/pagination');
+const firebaseSort = require('../modules/firebaseSort');
 
 const router = express.Router();
 const categoriesPath = '/categories/';
@@ -28,10 +29,10 @@ router.get('/archives/:state', (req, res) => {
   let categories = {};
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
-    return articlesRef.orderByChild('status').equalTo(state).once('value');
+    return articlesRef.orderByChild('update_time').once('value');
   }).then((snapshot) => {
-    // const articles = snapshot.val();
-    const articles = convertPagination(snapshot, currentPage, `dashboard/archives/${state}`);
+    const sortData = firebaseSort.byDate(snapshot, 'status', state);
+    const articles = convertPagination(sortData, currentPage, `dashboard/archives/${state}`);
     res.render('dashboard/archives', {
       title: 'Express',
       articles: articles.data,
