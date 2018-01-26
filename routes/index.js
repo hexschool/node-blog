@@ -36,14 +36,20 @@ router.get('/', (req, res) => {
 
 router.get('/archives/:category', (req, res) => {
   const currentPage = Number.parseInt(req.query.page, 10) || 1;
-  const categoryId = req.param('category');
+  const categoryPath = req.param('category');
   let categories = {};
+  let categoryId = '';
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
+    snapshot.forEach((childSnapshot) => {
+      if (childSnapshot.val().path === categoryPath) {
+        categoryId = childSnapshot.val().id;
+      }
+    });
     return articlesRef.orderByChild('update_time').once('value');
   }).then((snapshot) => {
     const sortData = firebaseSort.byDate(snapshot, 'category', categoryId);
-    const articles = convertPagination(sortData, currentPage, `archives/${categoryId}`);
+    const articles = convertPagination(sortData, currentPage, `archives/${categoryPath}`);
     res.render('archives', {
       title: 'Express',
       categories,

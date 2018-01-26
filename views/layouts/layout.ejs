@@ -37,7 +37,7 @@
           <% if (categories[prop].id === categoryId) { %>
             <%- 'active' %>
           <% } %>
-          " href="/archives/<%- categories[prop].id %>"><%- categories[prop].name %> <span class="sr-only">(current)</span></a>
+          " href="/archives/<%- categories[prop].path %>"><%- categories[prop].name %> <span class="sr-only">(current)</span></a>
         <% } %>
       </div>
     </div>
