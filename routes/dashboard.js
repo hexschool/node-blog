@@ -22,17 +22,17 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/archives/:state', (req, res) => {
+router.get('/archives/', (req, res) => {
   const messages = req.flash('error');
-  const state = req.param('state') || 'public';
+  const status = req.query.status || 'public';
   const currentPage = Number.parseInt(req.query.page, 10) || 1;
   let categories = {};
   categoriesRef.once('value').then((snapshot) => {
     categories = snapshot.val();
     return articlesRef.orderByChild('update_time').once('value');
   }).then((snapshot) => {
-    const sortData = firebaseSort.byDate(snapshot, 'status', state);
-    const articles = convertPagination(sortData, currentPage, `dashboard/archives/${state}`);
+    const sortData = firebaseSort.byDate(snapshot, 'status', status);
+    const articles = convertPagination(sortData, currentPage, `dashboard/archives?status=${status}`);
     res.render('dashboard/archives', {
       title: 'Express',
       articles: articles.data,
@@ -40,7 +40,7 @@ router.get('/archives/:state', (req, res) => {
       currentPath: '/archives/',
       messages,
       categories,
-      state,
+      status,
       moment, // 時間套件
       striptags,
       hasErrors: messages.length > 0,
@@ -117,7 +117,7 @@ router.post('/article/create', (req, res) => {
 router.post('/article/update/:id', (req, res) => {
   const data = req.body;
   const id = req.param('id');
-  articlesRef.child(id).set(data).then(() => {
+  articlesRef.child(id).update(data).then(() => {
     res.redirect(`/dashboard/article/${data.id}`);
   });
 });

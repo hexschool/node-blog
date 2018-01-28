@@ -23,9 +23,6 @@
       <% } %>
     <% } %>
 
-    <% if (article.id) {%>
-      <input type="hidden" name="id" value="<%= article.id %>">
-    <% } %>
     <label for="title">請輸入標題</label>
     <input type="text" id="title" class="form-control" name="title" placeholder="標題" value="<%= article.title || '' %>">
     <hr>

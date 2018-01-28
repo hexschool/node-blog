@@ -17,8 +17,8 @@
     <% } %>
 
     <div class="btn-group w-100">
-      <a href="/dashboard/archives/public" class="btn btn-outline-secondary w-100 rounded-0 <% if(state === 'public') { %><%= 'active' %><% } %>">已發佈</a>
-      <a href="/dashboard/archives/draft" class="btn btn-outline-secondary w-100 rounded-0 <% if(state === 'draft') { %><%= 'active' %><% } %>">草稿</a>
+      <a href="/dashboard/archives?status=public" class="btn btn-outline-secondary w-100 rounded-0 <% if(status === 'public') { %><%= 'active' %><% } %>">已發佈</a>
+      <a href="/dashboard/archives?status=draft" class="btn btn-outline-secondary w-100 rounded-0 <% if(status === 'draft') { %><%= 'active' %><% } %>">草稿</a>
       <a href="/dashboard/article/create" class="btn btn-primary">新增文章</a>
     </div>
 
@@ -46,7 +46,7 @@
         <div class="card-footer p-0 btn-group">
           <a href="#" class="btn btn-outline-danger rounded-0 deletePost" data-id="<%- articles[prop].id %>" data-title="<%- articles[prop].title %>">刪除</a>
           <a href="/dashboard/article/<%= articles[prop].id %>" class="btn btn-outline-secondary w-100 rounded-0">編輯</a>
-          <% if (state == 'public') { %>
+          <% if (status == 'public') { %>
           <a href="/post/<%- articles[prop].id %>" target="_blank" class="btn btn-outline-secondary w-100 rounded-0">預覽</a>
           <% } %>
         </div>
