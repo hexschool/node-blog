@@ -19,6 +19,9 @@
     .post {
       line-height: 1.8;
     }
+    .main {
+      min-height: calc(100vh - 26px - 136px - 48px);
+    }
   </style>
 </head>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00cc99;">
@@ -32,17 +35,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ml-auto">
+        <% var categories = categories || {} %>
         <% for (var prop in categories) { %>
+          <% if (categories.hasOwnProperty(prop)) { %>
           <a class="nav-item nav-link 
           <% if (categories[prop].id === categoryId) { %>
             <%- 'active' %>
           <% } %>
           " href="/archives/<%- categories[prop].path %>"><%- categories[prop].name %> <span class="sr-only">(current)</span></a>
+          <% } %>
         <% } %>
       </div>
     </div>
   </nav>
-  <div class="container">
+  <div class="container main">
     <%- content %>
   </div>
   <footer class="bg-light text-muted py-5">

@@ -45,7 +45,9 @@ app.use('/dashboard', authChecker, dashboard);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  res.render('error', {
+    title: '您所查看的頁面不存在 :('
+  });
 });
 
 // error handler

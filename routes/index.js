@@ -4,6 +4,7 @@ const striptags = require('striptags');
 const firebaseDb = require('../connections/firebase_admin_connect');
 const convertPagination = require('../modules/pagination');
 const firebaseSort = require('../modules/firebaseSort');
+const errorPage = require('../modules/errorPage');
 
 const router = express.Router();
 const categoriesPath = '/categories/';
@@ -69,7 +70,11 @@ router.get('/post/:id', (req, res) => {
     categories = snapshot.val();
     return articlesRef.child(id).once('value');
   }).then((snapshot) => {
+    console.log(snapshot.val());
     const article = snapshot.val();
+    if (!article) {
+      return errorPage(res, '找不到該文章');
+    }
     res.render('post', {
       title: 'Express',
       categoryId: null,
